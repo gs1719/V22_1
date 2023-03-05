@@ -1,5 +1,6 @@
 package com.example.v22_1
 
+import android.content.Intent
 import android.os.Binder
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -66,6 +67,7 @@ class MainActivity : AppCompatActivity() {
         userArrayList = ArrayList()
 
         for (eachIndex in name.indices) {
+            //            Creating user object and Adding it to ArrayList
             val user = User(
                 name[eachIndex],
                 lastmessage[eachIndex],
@@ -73,13 +75,30 @@ class MainActivity : AppCompatActivity() {
                 phoneNumber[eachIndex],
                 imgId[eachIndex]
             )
-//            Creating user object and Adding it to ArrayList
+
             userArrayList.add(user)
 
         }
         // creating own adapter and setting it to the listView
 
         binding.listView.adapter = MyAdapter(this,userArrayList)
+
+        binding.listView.setOnItemClickListener { parent, view, position, id ->
+
+            val userName = name[position]
+            val userPhone = phoneNumber[position]
+            val imgId = imgId[position]
+
+            val i = Intent(this,UserActivity::class.java)
+
+            i.putExtra("name",userName)
+
+            i.putExtra("phone",userPhone)
+            i.putExtra("imageId",imgId)
+
+            startActivity(i)
+
+        }
     }
 
 
